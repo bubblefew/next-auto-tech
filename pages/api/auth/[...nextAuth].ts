@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { ACCESS_TOKEN_KEY, HTTP_METHOD_GET, HTTP_METHOD_POST } from '@/utils/constant';
-import { setCookie } from '@/utils/cookiesUtil';
+import { clearCookie, setCookie } from '@/utils/cookiesUtil';
 import httpClient from '@/utils/httpClient';
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -38,8 +38,9 @@ async function signin(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-function signOut(req: NextApiRequest, res: NextApiResponse) {
-  res.send({ message: 'signout' })
+function signOut(req: NextApiRequest, res: NextApiResponse<any>) {
+  clearCookie(res, ACCESS_TOKEN_KEY);
+  res.json({ result: "ok" });
 }
 function getSession(req: NextApiRequest, res: NextApiResponse) {
   res.send({ message: 'session' })

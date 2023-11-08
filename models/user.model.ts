@@ -5,4 +5,5 @@ export interface UserData {
   email: string;
   image: string;
   token?: string;
+  user: string;
 }

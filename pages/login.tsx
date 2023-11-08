@@ -80,7 +80,7 @@ const Login = ({ }: Props) => {
                                 if (response.meta.requestStatus === 'rejected') {
                                     alert("login failed")
                                 } else {
-                                    alert("login success")
+                                    router.push('/stock')
                                 }
                             }}
                         >

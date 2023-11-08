@@ -4,6 +4,7 @@ import { RootState } from '@/store/store';
 import * as serverService from '@/services/serverService';
 import httpClient from '@/utils/httpClient';
 import { AxiosRequestConfig } from "axios";
+import Router from 'next/router';
 
 interface UserState {
     username: string;
@@ -23,12 +24,13 @@ const initialState: UserState = {
     accessToken: "",
     isAuthenticated: false,
     isAuthenticating: true,
-    user: 'undefined',
+    user: undefined,
 };
 
 interface SignAction {
     username: string;
     password: string;
+
 }
 
 export const signUp = createAsyncThunk(
@@ -62,6 +64,10 @@ export const signIn = createAsyncThunk(
     }
 );
 
+export const signOut = createAsyncThunk("user/signout", async () => {
+    await serverService.signOut();
+    Router.push("/login");
+});
 
 const userSlice = createSlice({
     name: 'user',
@@ -73,13 +79,27 @@ const userSlice = createSlice({
     },
     extraReducers: (builder) => { // async action 
         builder.addCase(signUp.fulfilled, (state, action) => {
-            state.username = action.payload.result
+            state.accessToken = ''
+            state.user = undefined
+            state.isAuthenticating = true
         }),
             builder.addCase(signIn.fulfilled, (state, action) => {
                 state.accessToken = action.payload.token;
                 state.isAuthenticated = true;
                 state.isAuthenticating = false;
-                state.user = action.payload.user;
+                state.user = action.payload.user
+            }),
+            builder.addCase(signIn.rejected, (state, action) => {
+                state.accessToken = '';
+                state.isAuthenticated = false;
+                state.isAuthenticating = false;
+                state.user = undefined
+            }),
+            builder.addCase(signOut.fulfilled, (state, action) => {
+                state.accessToken = '';
+                state.isAuthenticated = false;
+                state.isAuthenticating = true;
+                state.user = undefined
             });
     }
 })
