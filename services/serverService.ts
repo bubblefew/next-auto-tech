@@ -1,4 +1,4 @@
-import { SignUp, SingIn } from '@/models/auth.model';
+import { GetSession, SignUp, SingIn } from '@/models/auth.model';
 import httpClient from '@/utils/httpClient';
 import axios from 'axios';
 
@@ -30,3 +30,11 @@ export async function signOut() {
     return response.data;
 }
 
+
+export const getSession = async (): Promise<GetSession> => {
+    const response = await httpClient.get(`/auth/session`, {
+        baseURL: process.env.NEXT_PUBLIC_BASE_URL_LOCAL_API,
+    });
+
+    return response.data;
+};

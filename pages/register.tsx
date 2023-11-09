@@ -5,6 +5,7 @@ import { Formik, Form, Field, FormikProps } from "formik";
 import Router, { useRouter } from 'next/router'
 import { useAppDispatch } from '@/store/store';
 import { signUp } from '@/store/slices/userSlice'
+import withAuth from './../components/withAuth';
 type Props = {}
 
 const Register = ({ }: Props) => {
@@ -103,4 +104,4 @@ const Register = ({ }: Props) => {
     )
 }
 
-export default Register
+export default withAuth(Register)

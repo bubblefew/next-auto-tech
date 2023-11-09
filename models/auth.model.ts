@@ -6,8 +6,14 @@ export type SignUp = {
 }
 
 export type SingIn = {
+    user: any;
     result: string,
     token: string,
     error?: string
+}
+export interface GetSession {
+    result: string;
+    error?: string;
+    user?: UserData;
 }
 
