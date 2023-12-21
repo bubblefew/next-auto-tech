@@ -1,9 +1,11 @@
 export const productImageURL = (image?: string): string => {
-  return `${process.env.NEXT_PUBLIC_BASE_IMAGE_URL_API}/${image}`;
+  console.log(process.env.NEXT_PUBLIC_BASE_URL_IMAGE_URL_API);
+
+  return `${process.env.NEXT_PUBLIC_BASE_URL_IMAGE_URL_API}/${image}`;
 };
 
 export const userProfileImageURL = (image?: string): string => {
-  return `${process.env.NEXT_PUBLIC_BASE_IMAGE_URL_API}/${image}`;
+  return `${process.env.NEXT_PUBLIC_BASE_URL_IMAGE_URL_API}/${image}`;
 };
 
 export const isClient = () => typeof window !== "undefined";
@@ -20,3 +22,4 @@ export const getBase64 = (file: any): Promise<string | ArrayBuffer | null> => {
     reader.onerror = (error) => reject(error);
   });
 };
+

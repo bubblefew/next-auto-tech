@@ -1,5 +1,6 @@
 import Layout from '@/components/Layouts/Layout'
 import React from 'react'
+import withAuth from '@/components/withAuth';
 
 type Props = {}
 
@@ -12,4 +13,4 @@ const report = (props: Props) => {
     )
 }
 
-export default report
+export default withAuth(report)
