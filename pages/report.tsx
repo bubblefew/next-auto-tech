@@ -6,7 +6,7 @@ type Props = {}
 const report = (props: Props) => {
     return (
         <Layout>
-            <div>report</div>
+            <div> report </div>
         </Layout>
 
     )
