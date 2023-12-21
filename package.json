@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.14.15",
     "@mui/material": "^5.15.1",
     "@mui/x-data-grid": "^6.17.0",
+    "@mui/x-data-grid-generator": "^6.18.5",
     "@react-hook/debounce": "^4.0.0",
     "@reduxjs/toolkit": "^1.9.7",
     "@types/cookie": "^0.5.3",
