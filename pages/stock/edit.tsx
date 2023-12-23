@@ -1,7 +1,7 @@
 import Layout from "@/components/Layouts/Layout";
 import withAuth from "@/components/withAuth";
 import { ProductData } from "@/models/product.model";
-import { doGetStockById, editProduct } from "@/services/serverService";
+import { doGetStockById, editProduct } from "@/services/product.services";
 import { productImageURL } from "@/utils/commonUtil";
 import {
     Card,

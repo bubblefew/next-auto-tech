@@ -1,11 +1,17 @@
-import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { store } from '@/store/store';
 import { Provider } from 'react-redux';
 import * as React from "react";
 import { getSession } from '@/store/slices/userSlice';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { blue, red } from '@mui/material/colors'
+import { blue } from '@mui/material/colors'
+
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+
+
 function MyApp({ Component, pageProps }: AppProps) {
   const drawerWidth = 240
   const theme = createTheme({
@@ -40,11 +46,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     store.dispatch(getSession())
   })
   return (
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
         <Component {...pageProps} />
-      </Provider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Provider>
+
 
   )
 }

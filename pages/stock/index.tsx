@@ -118,7 +118,12 @@ const Stock = ({ }: Props) => {
 
 
     const columns: GridColDef[] = [
-        { field: "id", headerName: "ID", width: 90 },
+        {
+            field: "id",
+            headerName: "ID",
+            minWidth: 120,
+            maxWidth: 120
+        },
         // {
         //     disableColumnMenu: true,
         //     headerName: "IMG",
@@ -140,13 +145,15 @@ const Stock = ({ }: Props) => {
         {
             field: "name",
             headerName: "Name",
-            width: 555,
+            minWidth: 500,
+            maxWidth: 555
             // flex: 1
         },
         {
             field: "stock",
             headerName: "STOCK",
-            width: 150,
+            minWidth: 120,
+            maxWidth: 200,
             renderCell: ({ value }: GridRenderCellParams<ProductData>) => (
                 <Typography variant="body1">
                     <NumericFormat
@@ -162,7 +169,8 @@ const Stock = ({ }: Props) => {
         {
             headerName: "PRICE",
             field: "price",
-            width: 120,
+            minWidth: 120,
+            maxWidth: 200,
             renderCell: ({ value }: GridRenderCellParams<ProductData>) => (
                 <Typography variant="body1">
                     <NumericFormat
@@ -191,9 +199,8 @@ const Stock = ({ }: Props) => {
             field: ".",
             align: 'center',
             headerAlign: 'center',
-
-            // width: 120,
-            flex: 1,
+            minWidth: 150,
+            maxWidth: 250,
             renderCell: ({ row }: GridRenderCellParams<ProductData>) => (
                 <Stack direction="row">
                     <IconButton

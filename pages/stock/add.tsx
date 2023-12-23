@@ -1,8 +1,8 @@
 import Layout from "@/components/Layouts/Layout";
 import withAuth from "@/components/withAuth";
 import { ProductData } from "@/models/product.model";
-import {addProduct} from "@/services/serverService";
-import {Card,CardContent,Typography,CardActions,Button} from "@mui/material";
+import { addProduct } from "@/services/product.services";
+import { Card, CardContent, Typography, CardActions, Button } from "@mui/material";
 import { Field, Form, Formik, FormikProps } from "formik";
 import { TextField } from "formik-material-ui";
 import Link from "next/link";
@@ -101,7 +101,7 @@ const Add = ({ }: Props) => {
                         </Button>
                         <Link href="/stock" passHref>
                             <Button variant="outlined" fullWidth>
-                                Cancl
+                                Cancel
                             </Button>
                         </Link>
                     </CardActions>

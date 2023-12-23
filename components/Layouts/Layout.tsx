@@ -22,9 +22,16 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const [open, setOpen] = React.useState(() => {
-    // Get the value from local storage, or default to false
-    return JSON.parse(localStorage.getItem("drawerOpen") || "false");
+    if (typeof window !== 'undefined' && window.localStorage) {
+      // Get the value from local storage, or default to false
+      const storedValue = localStorage.getItem("drawerOpen");
+      return storedValue ? JSON.parse(storedValue) : false;
+    } else {
+      // Handle the case where localStorage is not available
+      return false;
+    }
   });
+
 
   const handleCloseDrawer = () => {
     setOpen(false);

@@ -11,7 +11,10 @@ import { useAppDispatch } from "@/store/store";
 import { signIn } from "@/store/slices/userSlice";
 import withAuth from "@/components/withAuth";
 import Swal from "sweetalert2";
-
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 type Props = {};
 
 const Login = ({ }: Props) => {
