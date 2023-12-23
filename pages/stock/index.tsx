@@ -7,10 +7,10 @@ import {
     GridRenderCellParams,
     GridToolbar,
     GridToolbarContainer,
-    GridToolbarFilterButton,
 } from "@mui/x-data-grid";
 import { useAppDispatch } from "@/store/store";
 import {
+    deleteProduct,
     getProducts,
     productSelector,
 } from "@/store/slices/productSlice";
@@ -40,13 +40,10 @@ import Swal from "sweetalert2";
 
 
 
-const CustomToolbar: React.FunctionComponent<{
-    setFilterButtonEl: React.Dispatch<
-        React.SetStateAction<HTMLButtonElement | null>
-    >;
-}> = ({ setFilterButtonEl }) => (
+const CustomToolbar: React.FunctionComponent<{}> = () => (
     <GridToolbarContainer>
-        <GridToolbarFilterButton ref={setFilterButtonEl} />
+        {/* <GridToolbarFilterButton ref={setFilterButtonEl} /> */}
+        <GridToolbar />
         <Link href="/stock/add" passHref>
             <Fab
                 color="primary"
@@ -69,11 +66,7 @@ const Stock = ({ }: Props) => {
     const dispatch = useAppDispatch();
     const productList = useSelector(productSelector);
     const [openDialog, setOpenDialog] = React.useState<boolean>(false);
-    const [selectedProduct, setSelectedProduct] =
-        React.useState<ProductData | null>(null);
-    const [showAlert, setShowAlert] = React.useState(false);
-    const [filterButtonEl, setFilterButtonEl] =
-        React.useState<HTMLButtonElement | null>(null);
+    const [selectedProduct, setSelectedProduct] = React.useState<ProductData | null>(null);
 
     React.useEffect(() => {
         dispatch(getProducts());
@@ -113,7 +106,7 @@ const Stock = ({ }: Props) => {
 
     const handleDeleteConfirm = () => {
         if (selectedProduct) {
-            // dispatch(deleteProduct(String(selectedProduct.id)));
+            dispatch(deleteProduct(String(selectedProduct.id)));
             setOpenDialog(false);
             Swal.fire({
                 icon: "success",
@@ -147,8 +140,8 @@ const Stock = ({ }: Props) => {
         {
             field: "name",
             headerName: "Name",
-            // width: 350,
-            flex: 1
+            width: 555,
+            // flex: 1
         },
         {
             field: "stock",
@@ -196,7 +189,11 @@ const Stock = ({ }: Props) => {
         {
             headerName: "ACTION",
             field: ".",
-            width: 120,
+            align: 'center',
+            headerAlign: 'center',
+
+            // width: 120,
+            flex: 1,
             renderCell: ({ row }: GridRenderCellParams<ProductData>) => (
                 <Stack direction="row">
                     <IconButton
@@ -270,11 +267,11 @@ const Stock = ({ }: Props) => {
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 10,
+                            pageSize: 12,
                         },
                     },
                 }}
-                pageSizeOptions={[10, 25, 50, 100]}
+                pageSizeOptions={[12, 25, 50, 100]}
                 disableRowSelectionOnClick
                 localeText={{
                     toolbarDensity: 'Size',
@@ -284,9 +281,13 @@ const Stock = ({ }: Props) => {
                     toolbarDensityComfortable: 'Large',
                 }}
                 slots={{
-                    toolbar: GridToolbar,
+                    // toolbar: GridToolbar,
+                    toolbar: CustomToolbar,
                     noRowsOverlay: CustomNoRowsOverlay,
                 }}
+
+
+
             />
             {showDialog()}
         </Layout>

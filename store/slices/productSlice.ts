@@ -15,8 +15,8 @@ const initialState: ProductState = {
 
 export const getProducts = createAsyncThunk(
     "product/get",
-    async (keyword?: string) => {
-        return await serverService.getProducts(keyword);
+    async () => {
+        return await serverService.getProducts();
     }
 );
 

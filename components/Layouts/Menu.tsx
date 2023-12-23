@@ -85,8 +85,8 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
         >
           <Image
             src="/static/img/cm_logo.png"
-            width={200}
-            height={40}
+            width={155}
+            height={55}
             objectFit="contain"
             alt="logo"
           />
@@ -144,16 +144,7 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
       </List>
 
       <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+
     </Drawer>
   );
 }
