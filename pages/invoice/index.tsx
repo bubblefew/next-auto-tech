@@ -13,6 +13,9 @@ import {
 } from '@mui/material';
 import withAuth from '@/components/withAuth';
 
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import dayjs from 'dayjs';
+
 type Props = {};
 
 interface ICountry {
@@ -21,11 +24,7 @@ interface ICountry {
     iso: string;
 }
 
-const initValues = {
-    productId: 0,
-    productName: '',
-    customerName: null, // Add a field for selected country
-};
+
 
 const countries: ICountry[] = [
     {
@@ -51,6 +50,11 @@ const countries: ICountry[] = [
 ];
 
 const Invoice = ({ }: Props) => {
+    const initValues = {
+        productId: 0,
+        customerCode: null, // Add a field for selected country
+        transDate: dayjs(),
+    };
     const showForm = ({ handleSubmit, setFieldValue }: FormikProps<any>) => {
         return (
             <Form onSubmit={handleSubmit}>
@@ -60,16 +64,23 @@ const Invoice = ({ }: Props) => {
                             <Typography gutterBottom variant="h6">
                                 Invoice
                             </Typography>
+                            <DesktopDatePicker
+                                format='DD/MM/YYYY'
+                                label="Transaction Date"
+                                name="transDate"
+                                value={initValues.transDate}
+                                onChange={(date) => setFieldValue('transDate', dayjs(date).format('DD/MM/YYYY'))}
+                            />
                         </Box>
                         <Grid container spacing={2}>
-                            <Grid item xs={6}>
+                            <Grid item xs={3}>
                                 <Autocomplete
                                     sx={{ paddingTop: 2 }}
-                                    id="customerName"
+                                    id="customerCode"
                                     options={countries}
                                     getOptionLabel={(option) => option.label}
                                     renderInput={(params) => (
-                                        <TextField {...params} label="customerName" />
+                                        <TextField {...params} label="customerCode" />
                                     )}
                                     onChange={(event, value) => {
                                         // Set the selected country to Formik's state
@@ -77,7 +88,7 @@ const Invoice = ({ }: Props) => {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={3}>
                                 <Field
                                     component={TextField}
                                     name="productName"
