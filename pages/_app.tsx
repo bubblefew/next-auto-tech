@@ -28,9 +28,17 @@ function MyApp({ Component, pageProps }: AppProps) {
           }
         }
       },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            fontSize: '0.75rem', // Set a smaller font size for TextField
+          },
+        },
+      },
     },
     typography: {
       fontFamily: "Roboto",
+      fontSize: 14,
       fontWeightLight: 300,
       fontWeightRegular: 400,
       fontWeightMedium: 500,
@@ -43,7 +51,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         default: "#FFF"
       }
     }
-  })
+  });
+
   React.useEffect(() => {
     store.dispatch(getSession())
   })
@@ -55,8 +64,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         </LocalizationProvider>
       </ThemeProvider>
     </Provider >
-
-
   )
 }
 

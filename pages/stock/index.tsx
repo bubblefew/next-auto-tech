@@ -7,6 +7,7 @@ import {
     GridRenderCellParams,
     GridToolbar,
     GridToolbarContainer,
+    GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
 import { useAppDispatch } from "@/store/store";
 import {
@@ -15,7 +16,6 @@ import {
     productSelector,
 } from "@/store/slices/productSlice";
 import { useSelector } from "react-redux";
-import "react-medium-image-zoom/dist/styles.css";
 import {
     Button,
     Dialog,
@@ -43,6 +43,7 @@ import Swal from "sweetalert2";
 const CustomToolbar: React.FunctionComponent<{}> = () => (
     <GridToolbarContainer>
         {/* <GridToolbarFilterButton ref={setFilterButtonEl} /> */}
+        <GridToolbarQuickFilter />
         <GridToolbar />
         <Link href="/stock/add" passHref>
             <Fab
