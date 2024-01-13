@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
-import * as serverService from "@/services/serverService";
+import * as serverService from "@/services/product.services";
 import { ProductData } from "@/models/product.model";
 import { RootState, store } from "../store";
 import { NextRouter } from "next/router";
@@ -15,8 +15,8 @@ const initialState: ProductState = {
 
 export const getProducts = createAsyncThunk(
     "product/get",
-    async (keyword?: string) => {
-        return await serverService.getProducts(keyword);
+    async () => {
+        return await serverService.getProducts();
     }
 );
 
@@ -41,6 +41,7 @@ const productSlice = createSlice({
 // export common user selector
 export const productSelector = (store: RootState): ProductData[] | undefined =>
     store.product.products;
+
 
 // export reducer
 export default productSlice.reducer;

@@ -1,21 +1,20 @@
-import React, { ReactElement } from "react";
-
-import { makeStyles } from "@mui/material/styles";
+import React from "react";
 import Card from "@mui/material/Card";
-import CardActionArea from "@mui/material/CardActionArea";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import { TextField } from "formik-material-ui";
 import { Formik, Form, Field, FormikProps } from "formik";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { Box } from "@mui/material";
 import { useAppDispatch } from "@/store/store";
 import { signIn } from "@/store/slices/userSlice";
 import withAuth from "@/components/withAuth";
-
+import Swal from "sweetalert2";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 type Props = {};
 
 const Login = ({ }: Props) => {
@@ -23,10 +22,6 @@ const Login = ({ }: Props) => {
     const router = useRouter();
 
     const showForm = ({
-        values,
-        setFieldValue,
-        isValid,
-        dirty,
         handleSubmit,
     }: FormikProps<any>) => {
         return (
@@ -83,7 +78,7 @@ const Login = ({ }: Props) => {
                 <Card sx={{ maxWidth: 345 }}>
                     <CardMedia
                         sx={{ height: 200 }}
-                        image="/static/img/next_login.jpg"
+                        image="/static/img/logo.png"
                         title="Contemplative Reptile"
                     />
                     <CardContent>
@@ -92,7 +87,11 @@ const Login = ({ }: Props) => {
                             onSubmit={async (values) => {
                                 const response = await dispatch(signIn(values));
                                 if (response.meta.requestStatus === "rejected") {
-                                    alert("Login failed");
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "Oops...",
+                                        text: "Login failed",
+                                    });
                                 } else {
                                     router.push("/stock");
                                 }
@@ -106,7 +105,7 @@ const Login = ({ }: Props) => {
                 <style jsx global>
                     {`
             body {
-              min-height: 100vh;
+              min-height: 95vh;
               position: relative;
               margin: 0;
               background-size: cover;

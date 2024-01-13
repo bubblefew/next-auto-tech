@@ -21,13 +21,32 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(() => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      // Get the value from local storage, or default to false
+      const storedValue = localStorage.getItem("drawerOpen");
+      return storedValue ? JSON.parse(storedValue) : false;
+    } else {
+      // Handle the case where localStorage is not available
+      return false;
+    }
+  });
+
+
+  const handleCloseDrawer = () => {
+    setOpen(false);
+  };
+
+  React.useEffect(() => {
+    // Update local storage when the state changes
+    localStorage.setItem("drawerOpen", JSON.stringify(open));
+  }, [open]);
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <Header open={open} onDrawerOpen={() => setOpen(true)} />
-      <Menu open={open} onDrawerClose={() => setOpen(false)} />
+      <Menu open={open} onDrawerClose={handleCloseDrawer} />
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         {children}

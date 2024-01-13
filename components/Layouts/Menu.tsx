@@ -11,12 +11,13 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { blue } from "@mui/material/colors";
-import { ListItem, Stack } from "@mui/material";
+import { ListItem, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import { Layers, BarChart, Person } from "@mui/icons-material";
 import { useRouter } from "next/router";
-
+import InventoryIcon from '@mui/icons-material/Inventory';
+import DescriptionIcon from '@mui/icons-material/Description';
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -84,12 +85,14 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
           sx={{ backgroundColor: blue }}
         >
           <Image
-            src="/static/img/cm_logo.png"
-            width={200}
-            height={40}
+            src="/static/img/logo.png"
+            width={155}
+            height={55}
             objectFit="contain"
             alt="logo"
           />
+          {/* <Typography> แอ๊ดไดโนโม</Typography> */}
+
           <IconButton onClick={onDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
@@ -110,12 +113,22 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
             className={router.pathname === "/stock" ? "Mui-selected" : ""}
           >
             <ListItemIcon>
-              <Layers />
+              <InventoryIcon />
             </ListItemIcon>
             <ListItemText primary="Stock" />
           </ListItem>
         </Link>
-
+        <Link href="/invoice" passHref>
+          <ListItem
+            button
+            className={router.pathname === "/invoice" ? "Mui-selected" : ""}
+          >
+            <ListItemIcon>
+              <DescriptionIcon />
+            </ListItemIcon>
+            <ListItemText primary="Invoice" />
+          </ListItem>
+        </Link>
         {/* Report */}
         <Link href="/report" passHref>
           <ListItem
@@ -144,16 +157,7 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
       </List>
 
       <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+
     </Drawer>
   );
 }

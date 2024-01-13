@@ -7,15 +7,15 @@ import {
     GridRenderCellParams,
     GridToolbar,
     GridToolbarContainer,
-    GridToolbarFilterButton,
+    GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
 import { useAppDispatch } from "@/store/store";
 import {
+    deleteProduct,
     getProducts,
     productSelector,
 } from "@/store/slices/productSlice";
 import { useSelector } from "react-redux";
-import "react-medium-image-zoom/dist/styles.css";
 import {
     Button,
     Dialog,
@@ -40,13 +40,11 @@ import Swal from "sweetalert2";
 
 
 
-const CustomToolbar: React.FunctionComponent<{
-    setFilterButtonEl: React.Dispatch<
-        React.SetStateAction<HTMLButtonElement | null>
-    >;
-}> = ({ setFilterButtonEl }) => (
+const CustomToolbar: React.FunctionComponent<{}> = () => (
     <GridToolbarContainer>
-        <GridToolbarFilterButton ref={setFilterButtonEl} />
+        {/* <GridToolbarFilterButton ref={setFilterButtonEl} /> */}
+        <GridToolbarQuickFilter />
+        <GridToolbar />
         <Link href="/stock/add" passHref>
             <Fab
                 color="primary"
@@ -69,11 +67,7 @@ const Stock = ({ }: Props) => {
     const dispatch = useAppDispatch();
     const productList = useSelector(productSelector);
     const [openDialog, setOpenDialog] = React.useState<boolean>(false);
-    const [selectedProduct, setSelectedProduct] =
-        React.useState<ProductData | null>(null);
-    const [showAlert, setShowAlert] = React.useState(false);
-    const [filterButtonEl, setFilterButtonEl] =
-        React.useState<HTMLButtonElement | null>(null);
+    const [selectedProduct, setSelectedProduct] = React.useState<ProductData | null>(null);
 
     React.useEffect(() => {
         dispatch(getProducts());
@@ -113,7 +107,7 @@ const Stock = ({ }: Props) => {
 
     const handleDeleteConfirm = () => {
         if (selectedProduct) {
-            // dispatch(deleteProduct(String(selectedProduct.id)));
+            dispatch(deleteProduct(String(selectedProduct.id)));
             setOpenDialog(false);
             Swal.fire({
                 icon: "success",
@@ -125,7 +119,12 @@ const Stock = ({ }: Props) => {
 
 
     const columns: GridColDef[] = [
-        { field: "id", headerName: "ID", width: 90 },
+        {
+            field: "id",
+            headerName: "ID",
+            minWidth: 120,
+            maxWidth: 120
+        },
         // {
         //     disableColumnMenu: true,
         //     headerName: "IMG",
@@ -147,13 +146,15 @@ const Stock = ({ }: Props) => {
         {
             field: "name",
             headerName: "Name",
-            // width: 350,
-            flex: 1
+            minWidth: 500,
+            maxWidth: 555
+            // flex: 1
         },
         {
             field: "stock",
             headerName: "STOCK",
-            width: 150,
+            minWidth: 120,
+            maxWidth: 200,
             renderCell: ({ value }: GridRenderCellParams<ProductData>) => (
                 <Typography variant="body1">
                     <NumericFormat
@@ -169,7 +170,8 @@ const Stock = ({ }: Props) => {
         {
             headerName: "PRICE",
             field: "price",
-            width: 120,
+            minWidth: 120,
+            maxWidth: 200,
             renderCell: ({ value }: GridRenderCellParams<ProductData>) => (
                 <Typography variant="body1">
                     <NumericFormat
@@ -196,7 +198,10 @@ const Stock = ({ }: Props) => {
         {
             headerName: "ACTION",
             field: ".",
-            width: 120,
+            align: 'center',
+            headerAlign: 'center',
+            minWidth: 150,
+            maxWidth: 250,
             renderCell: ({ row }: GridRenderCellParams<ProductData>) => (
                 <Stack direction="row">
                     <IconButton
@@ -270,11 +275,11 @@ const Stock = ({ }: Props) => {
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 10,
+                            pageSize: 12,
                         },
                     },
                 }}
-                pageSizeOptions={[10, 25, 50, 100]}
+                pageSizeOptions={[12, 25, 50, 100]}
                 disableRowSelectionOnClick
                 localeText={{
                     toolbarDensity: 'Size',
@@ -284,9 +289,13 @@ const Stock = ({ }: Props) => {
                     toolbarDensityComfortable: 'Large',
                 }}
                 slots={{
-                    toolbar: GridToolbar,
+                    // toolbar: GridToolbar,
+                    toolbar: CustomToolbar,
                     noRowsOverlay: CustomNoRowsOverlay,
                 }}
+
+
+
             />
             {showDialog()}
         </Layout>
