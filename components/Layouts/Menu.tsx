@@ -16,7 +16,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Layers, BarChart, Person } from "@mui/icons-material";
 import { useRouter } from "next/router";
-
+import InventoryIcon from '@mui/icons-material/Inventory';
+import DescriptionIcon from '@mui/icons-material/Description';
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -110,12 +111,22 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
             className={router.pathname === "/stock" ? "Mui-selected" : ""}
           >
             <ListItemIcon>
-              <Layers />
+              <InventoryIcon />
             </ListItemIcon>
             <ListItemText primary="Stock" />
           </ListItem>
         </Link>
-
+        <Link href="/invoice" passHref>
+          <ListItem
+            button
+            className={router.pathname === "/invoice" ? "Mui-selected" : ""}
+          >
+            <ListItemIcon>
+              <DescriptionIcon />
+            </ListItemIcon>
+            <ListItemText primary="Invoice" />
+          </ListItem>
+        </Link>
         {/* Report */}
         <Link href="/report" passHref>
           <ListItem
