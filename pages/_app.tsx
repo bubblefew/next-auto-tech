@@ -5,7 +5,9 @@ import * as React from "react";
 import { getSession } from '@/store/slices/userSlice';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { blue } from '@mui/material/colors'
-
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import type { } from '@mui/x-date-pickers/themeAugmentation';
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -25,10 +27,18 @@ function MyApp({ Component, pageProps }: AppProps) {
             width: drawerWidth
           }
         }
-      }
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            fontSize: '0.75rem', // Set a smaller font size for TextField
+          },
+        },
+      },
     },
     typography: {
       fontFamily: "Roboto",
+      fontSize: 14,
       fontWeightLight: 300,
       fontWeightRegular: 400,
       fontWeightMedium: 500,
@@ -41,18 +51,19 @@ function MyApp({ Component, pageProps }: AppProps) {
         default: "#FFF"
       }
     }
-  })
+  });
+
   React.useEffect(() => {
     store.dispatch(getSession())
   })
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Component {...pageProps} />
+        </LocalizationProvider>
       </ThemeProvider>
-    </Provider>
-
-
+    </Provider >
   )
 }
 

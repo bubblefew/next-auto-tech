@@ -1,12 +1,13 @@
-export type ProductData = {
+
+export type ProductItemData = {
     id?: number;
     name: string;
-    image?: string;
     qty?: number;
     price: number;
     stock: number;
-    file?: any;
-    file_obj?: URL | string;
+    total?: number;
     createdAt?: Date;
     updatedAt?: Date;
+    createBy?: string;
+    updateBy?: string;
 }

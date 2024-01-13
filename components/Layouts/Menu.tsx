@@ -11,7 +11,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { blue } from "@mui/material/colors";
-import { ListItem, Stack } from "@mui/material";
+import { ListItem, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import { Layers, BarChart, Person } from "@mui/icons-material";
@@ -85,12 +85,14 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
           sx={{ backgroundColor: blue }}
         >
           <Image
-            src="/static/img/cm_logo.png"
+            src="/static/img/logo.png"
             width={155}
             height={55}
             objectFit="contain"
             alt="logo"
           />
+          {/* <Typography> แอ๊ดไดโนโม</Typography> */}
+
           <IconButton onClick={onDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
