@@ -117,7 +117,7 @@ const Invoice = ({ }) => {
             productId: 2,
             productName: "Battery GS",
             productQty: 1,
-            productPrice: 1999.21
+            productPrice: 2500
         }
     ]
 
