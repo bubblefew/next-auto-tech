@@ -1,137 +1,20 @@
-<<<<<<< HEAD
-import React from 'react'
-import Layout from "@/components/Layouts/Layout";
+import React, { useState } from "react";
 import withAuth from "@/components/withAuth";
-import { Field, Form, Formik, FormikProps } from "formik";
-import { ProductData } from '@/models/product.model';
-import { useRouter } from "next/router";
-import { editProduct } from '@/services/product.services';
-import { Card, CardContent, Typography, CardActions, Button, Box, Autocomplete } from '@mui/material';
-import { TextField } from 'formik-material-ui';
-import Link from 'next/link';
-import DropDown from '@mui/material/TextField';
-type Props = {
-    product?: ProductData;
-};
-const top100Films = [
-    { label: 'The Shawshank Redemption', year: 1994 },
-    { label: 'The Godfather', year: 1972 },
-    { label: 'The Godfather: Part II', year: 1974 },
-    { label: 'The Dark Knight', year: 2008 },
-    { label: '12 Angry Men', year: 1957 },
-    { label: "Schindler's List", year: 1993 },
-    { label: 'Pulp Fiction', year: 1994 }
-];
-const Invoice = ({ product }: Props) => {
-    const router = useRouter();
-    const showForm = ({
-        values,
-        setFieldValue,
-        isValid,
-    }: FormikProps<ProductData>) => {
-        return (
-            <Form>
-                <Card>
-                    <CardContent sx={{ padding: 4 }}>
-                        <Typography gutterBottom variant="h3">
-                            Add Invoice
-                        </Typography>
-                        <Box>
-                            <Field
-                                style={{ marginTop: 16 }}
-                                component={TextField}
-                                name="name"
-                                type="text"
-                                label="Name"
-
-                            />
-                            <Field
-                                style={{ marginTop: 16 }}
-                                component={TextField}
-                                name="price"
-                                type="number"
-                                label="Price"
-                            />
-                        </Box>
-
-                        <Autocomplete style={{ marginTop: 16 }}
-                            disablePortal
-                            id="combo-box-demo"
-                            options={top100Films}
-                            sx={{ width: 300 }}
-                            renderInput={(params) =>
-                                <DropDown {...params} label="Movie" />
-                            }
-                        />
-
-                        <Field
-                            style={{ marginTop: 16 }}
-                            fullWidth
-                            component={TextField}
-                            name="stock"
-                            type="number"
-                            label="Stock"
-                        />
-
-                    </CardContent>
-                    <CardActions>
-                        <Button
-                            disabled={!isValid}
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                            sx={{ marginRight: 1 }}
-                        >
-                            Edit
-                        </Button>
-                        <Link href="/stock" passHref>
-                            <Button variant="outlined" fullWidth>
-                                Cancel
-                            </Button>
-                        </Link>
-                    </CardActions>
-                </Card>
-            </Form>
-        );
-    };
-    return (
-        <Layout>
-            <Formik
-                validate={(values) => {
-                    let errors: any = {};
-                    if (!values.name) errors.name = "Enter name";
-                    if (values.stock < 3) errors.stock = "Min stock is not lower than 3";
-                    if (values.price < 3) errors.price = "Min price is not lower than 3";
-                    return errors;
-                }}
-                initialValues={product!}
-                onSubmit={async (values, { setSubmitting }) => {
-                    let data = new FormData();
-                    data.append("id", String(values.id));
-                    data.append("name", values.name);
-                    data.append("price", String(values.price));
-                    data.append("stock", String(values.stock));
-                    if (values.file) {
-                        data.append("image", values.file);
-                    }
-                    await editProduct(data);
-                    router.push("/stock");
-                    setSubmitting(false);
-                }}
-            >
-                {(props) => showForm(props)}
-            </Formik>
-=======
-import React, { useState } from 'react'
-import withAuth from '@/components/withAuth';
-import Layout from '@/components/Layouts/Layout';
-import { Field, Form, Formik } from 'formik';
-import { Autocomplete, Box, Button, CardContent, Grid, TextField, Typography } from '@mui/material';
-import { FormikProps } from 'formik';
-import { DesktopDatePicker } from '@mui/x-date-pickers';
-import dayjs, { Dayjs } from 'dayjs';
-import { DataGrid, GridColDef, GridRenderCellParams, GridRowsProp } from '@mui/x-data-grid';
+import Layout from "@/components/Layouts/Layout";
+import { Field, Form, Formik } from "formik";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  CardContent,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { FormikProps } from "formik";
+import { DesktopDatePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
+import { GridRowsProp } from "@mui/x-data-grid";
 import Swal from "sweetalert2";
 import GridDataDisplay from "@/components/Invoice/GridProductInvoice";
 
@@ -452,38 +335,40 @@ const Invoice = () => {
               (row) => row.id === values.product.productId
             );
 
-                        if (isDuplicate) {
-                            Swal.fire({
-                                icon: "error",
-                                title: "Oops...",
-                                text: "Duplicate productId. Please choose a different product.",
-                            });
-                        } else {
-                            setGridData((prevGridData) => [
-                                ...prevGridData,
-                                {
-                                    id: values.product.productId,
-                                    productName: values.product.productName, // You may replace this with the actual product name
-                                    ...values,
-                                },
-                            ]);
-                            resetForm();
-                        }
-
-
-                    }}>
-                    {(props) => showFormDetail(props)}
-                </Formik>
-                <div style={{ height: 400, width: '100%', padding: 5 }}>
-                    <DataGrid
-                        rows={gridData}
-                        columns={columns}
-                        disableRowSelectionOnClick
-                    />
-                </div>
-            </Box>
-        </Layout>
-    )
-}
+            if (isDuplicate) {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Duplicate productId. Please choose a different product.",
+              });
+            } else {
+              setGridData((prevGridData) => [
+                ...prevGridData,
+                {
+                  id: values.product.productId,
+                  productName: values.product.productName, // You may replace this with the actual product name
+                  ...values,
+                },
+              ]);
+              resetForm();
+            }
+          }}
+        >
+          {(props) => showFormDetail(props)}
+        </Formik>
+        <Grid container spacing={2}>
+          <GridDataDisplay
+            gridData={gridData}
+            invoiceNumber={invoiceNumber}
+            calculateTotalQTY={calculateTotalQTY}
+            calculateSubtotal={calculateSubtotal}
+            sendDataToServer={sendDataToServer}
+            onDelete={handleDelete}
+          />
+        </Grid>
+      </Box>
+    </Layout>
+  );
+};
 
 export default withAuth(Invoice);
