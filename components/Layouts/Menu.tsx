@@ -129,7 +129,18 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
             <ListItemText primary="Invoice" />
           </ListItem>
         </Link>
-        {/* Report */}
+        <Link href="/customer" passHref>
+          <ListItem
+            button
+            className={router.pathname === "/customer" ? "Mui-selected" : ""}
+          >
+            <ListItemIcon>
+              <Person />
+            </ListItemIcon>
+            <ListItemText primary="Customers" />
+          </ListItem>
+        </Link>
+        {/* Report
         <Link href="/report" passHref>
           <ListItem
             button
@@ -140,20 +151,10 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
             </ListItemIcon>
             <ListItemText primary="Report" />
           </ListItem>
-        </Link>
+        </Link> */}
 
-        {/* Aboutus */}
-        <Link href="/aboutus" passHref>
-          <ListItem
-            button
-            className={router.pathname === "/aboutus" ? "Mui-selected" : ""}
-          >
-            <ListItemIcon>
-              <Person />
-            </ListItemIcon>
-            <ListItemText primary="About us" />
-          </ListItem>
-        </Link>
+
+
       </List>
 
       <Divider />

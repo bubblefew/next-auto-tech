@@ -356,7 +356,7 @@ const Invoice = () => {
         >
           {(props) => showFormDetail(props)}
         </Formik>
-        <Grid container spacing={2}>
+        <Grid container spacing={0} style={{ marginBottom: 16 }} >
           <GridDataDisplay
             gridData={gridData}
             invoiceNumber={invoiceNumber}
